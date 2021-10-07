@@ -1,13 +1,13 @@
-package ru.matmex.project;
+package com.clicker.Clicker;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MmoClickerApplication {
+public class ClickerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MmoClickerApplication.class, args);
+		SpringApplication.run(ClickerApplication.class, args);
 	}
 
 }
