@@ -3,15 +3,15 @@ CREATE TABLE Users
     id SERIAL PRIMARY KEY NOT NULL,
     team_id INT,
     name VARCHAR(50),
-    clickCount INT NOT NULL,
+    click_count INT NOT NULL,
     password VARCHAR(50)
 );
 
 CREATE TABLE Teams
 (
     id SERIAL PRIMARY KEY NOT NULL,
-    clickCount INT NOT NULL,
-    admin INT
+    click_count INT NOT NULL,
+    admin INT NOT NULL
 );
 
 ALTER TABLE Users ADD FOREIGN KEY (team_id) REFERENCES Teams(id);
