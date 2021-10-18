@@ -15,8 +15,28 @@ public class Team {
 
     @OneToOne
     @JoinColumn(name="admin")
-    private User admin;
+    private final User admin;
 
     @OneToMany(mappedBy="current_team")
     private List<User> users;
+
+    public Team(User admin) {
+        this.admin = admin;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void clickIncrement(){
+        click_count++;
+    }
+
+    public int getClick_count() {
+        return click_count;
+    }
+
+    public User getAdmin() {
+        return admin;
+    }
 }

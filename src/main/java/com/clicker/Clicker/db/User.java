@@ -25,5 +25,35 @@ public class User {
     public User(String name, String password){
         this.name = name;
         this.password = password;
+        clickCount = 0;
+        current_team = null;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getClickCount() {
+        return clickCount;
+    }
+
+    public void incrementClicks(){
+        clickCount++;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public Team getCurrent_team() {
+        return current_team;
+    }
+
+    public void setCurrent_team(Team current_team) {
+        this.current_team = current_team;
     }
 }
