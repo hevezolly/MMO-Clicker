@@ -1,53 +1,79 @@
 package com.clicker.Clicker.service.realisations;
 
-import com.clicker.Clicker.db.Team;
+import com.clicker.Clicker.entities.Role;
+import com.clicker.Clicker.entities.Team;
 import com.clicker.Clicker.repos.TeamRepository;
 import com.clicker.Clicker.repos.UserRepository;
+import com.clicker.Clicker.service.interfaces.TeamRequestResult;
+import com.clicker.Clicker.service.interfaces.UserRequestResult;
 import com.clicker.Clicker.service.interfaces.TeamManagment;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TeamManagmentImpl implements TeamManagment {
-    private final TeamRepository teamRep;
-    private final UserRepository userRep;
+public class TeamManagmentImpl implements TeamManagment{
 
-    @Autowired
+    private TeamRepository teamRep;
+    private UserRepository userRep;
+
+
+
     public TeamManagmentImpl(TeamRepository teamRep, UserRepository userRep) {
         this.teamRep = teamRep;
         this.userRep = userRep;
     }
 
     @Override
-    public void createTeam(int admin_id) {
-        var admin = userRep.getById(admin_id);
-        var team = new Team(admin);
-        admin.setCurrent_team(team);
-        userRep.save(admin);
-        teamRep.save(team);
+    public TeamRequestResult createTeam(String leader_username, String team_name) {
+        if (teamRep.existsById(team_name))
+            return TeamRequestResult.TeamExists;
+        if (!userRep.existsById(leader_username))
+            return TeamRequestResult.UserNotExists;
+        var leader = userRep.getById(leader_username);
+        if (leader.getCurrent_team() != null)
+            return TeamRequestResult.UserHasTeam;
+        var t = new Team();
+        t.setAdmin(leader);
+        t.setClick_count(leader.getClickCount());
+        t.setTeam_name(team_name);
+        teamRep.save(t);
+        leader.setCurrent_team(t);
+        leader.getRoles().add(Role.getLeader());
+        userRep.save(leader);
+        return TeamRequestResult.Success;
     }
 
     @Override
-    public void addUser(int team_id, int user_id) {
-        if (!teamRep.existsById(team_id) || !userRep.existsById(user_id))
-            return;
-        var team = teamRep.getById(team_id);
-        var user = userRep.getById(user_id);
+    public TeamRequestResult addUser(String team_name, String user_name) {
+        if (!teamRep.existsById(team_name))
+            return TeamRequestResult.TeamNotExists;
+        if (!userRep.existsById(user_name))
+            return TeamRequestResult.UserNotExists;
+        var user = userRep.getById(user_name);
+        var team = teamRep.getById(team_name);
+        if (user.getCurrent_team() != null){
+            return TeamRequestResult.UserHasTeam;
+        }
         user.setCurrent_team(team);
         userRep.save(user);
+        return TeamRequestResult.Success;
     }
 
     @Override
-    public void removeFromTeam(int user_id) {
-        if (!userRep.existsById(user_id))
-            return;
-        var user = userRep.getById(user_id);
+    public TeamRequestResult removeFromTeam(String user_name) {
+        if (!userRep.existsById(user_name))
+            return TeamRequestResult.UserNotExists;
+        var user = userRep.getById(user_name);
+        if (user.getCurrent_team() == null)
+            return TeamRequestResult.TeamNotExists;
+        if (user.getRoles().contains(Role.getLeader()))
+            return TeamRequestResult.UserIsLeader;
         user.setCurrent_team(null);
         userRep.save(user);
+        return TeamRequestResult.Success;
     }
 
     @Override
-    public Team getTeam(int id) {
-        return teamRep.findById(id).orElse(null);
+    public Team getTeam(String name) {
+        return teamRep.findById(name).orElse(null);
     }
 }

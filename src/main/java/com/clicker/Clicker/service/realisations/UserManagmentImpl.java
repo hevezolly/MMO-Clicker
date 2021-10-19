@@ -1,16 +1,26 @@
 package com.clicker.Clicker.service.realisations;
 
-import com.clicker.Clicker.db.User;
+import com.clicker.Clicker.entities.Role;
+import com.clicker.Clicker.entities.User;
 import com.clicker.Clicker.repos.TeamRepository;
 import com.clicker.Clicker.repos.UserRepository;
+import com.clicker.Clicker.service.interfaces.UserRequestResult;
 import com.clicker.Clicker.service.interfaces.UserManagment;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserManagmentImpl implements UserManagment {
-    private final TeamRepository teamRep;
-    private final UserRepository userRep;
+public class UserManagmentImpl implements UserManagment, UserDetailsService {
+
+    private TeamRepository teamRep;
+    private UserRepository userRep;
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     public UserManagmentImpl(TeamRepository teamRep, UserRepository userRep) {
@@ -19,38 +29,44 @@ public class UserManagmentImpl implements UserManagment {
     }
 
     @Override
-    public void createUser(String name, String password) {
-        var user = new User(name, password);
-        userRep.save(user);
+    public UserRequestResult createUser(String name, String password) {
+        if (userRep.existsById(name))
+            return UserRequestResult.Exists;
+        var u = new User();
+        u.setUsername(name);
+        u.setPassword(bCryptPasswordEncoder.encode(password));
+        u.getRoles().add(Role.getUser());
+        userRep.save(u);
+        return UserRequestResult.Success;
     }
 
     @Override
-    public void renameUser(int user_id, String new_name) {
-        if (!userRep.existsById(user_id))
-            return;
-        var user = userRep.getById(user_id);
-        user.setName(new_name);
-        userRep.save(user);
-    }
-
-    @Override
-    public void userClick(int user_id) {
-        if (!userRep.existsById(user_id))
-            return;
-        var user = userRep.getById(user_id);
-        user.incrementClicks();
+    public UserRequestResult userClick(String user_name) {
+        if (!userRep.existsById(user_name))
+            return UserRequestResult.NotExists;
+        var user = userRep.getById(user_name);
+        user.setClickCount(user.getClickCount()+1);
         userRep.save(user);
         var team = user.getCurrent_team();
         if (team != null){
-            team.clickIncrement();
+            team.setClick_count(team.getClick_count()+1);
             teamRep.save(team);
         }
+        return UserRequestResult.Success;
     }
 
     @Override
-    public User getUser(int id) {
-        if (!userRep.existsById(id))
+    public User getUser(String name) {
+        if (!userRep.existsById(name))
             return null;
-        return userRep.getById(id);
+        return userRep.getById(name);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        var u = getUser(s);
+        if (u != null)
+            return u;
+        throw new UsernameNotFoundException("");
     }
 }

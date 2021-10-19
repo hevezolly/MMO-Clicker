@@ -1,11 +1,10 @@
 package com.clicker.Clicker.service.interfaces;
 
-import com.clicker.Clicker.db.Team;
-import com.clicker.Clicker.db.User;
+import com.clicker.Clicker.entities.Team;
 
 public interface TeamManagment {
-    void createTeam(int admin_id);
-    void addUser(int team_id, int user_id);
-    void removeFromTeam(int user_id);
-    Team getTeam(int id);
+    TeamRequestResult createTeam(String admin_username, String team_name);
+    TeamRequestResult addUser(String team_name, String user_name);
+    TeamRequestResult removeFromTeam(String user_name);
+    Team getTeam(String name);
 }
