@@ -8,6 +8,7 @@ import java.util.List;
 public class Team {
 
     @Id
+    @GeneratedValue
     private int id;
 
     @Column(name="click_count")
@@ -15,13 +16,17 @@ public class Team {
 
     @OneToOne
     @JoinColumn(name="admin")
-    private final User admin;
+    private User admin;
 
     @OneToMany(mappedBy="current_team")
     private List<User> users;
 
     public Team(User admin) {
         this.admin = admin;
+    }
+
+    public Team() {
+        super();
     }
 
     public int getId() {

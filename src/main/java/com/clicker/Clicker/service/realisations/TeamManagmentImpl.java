@@ -29,6 +29,8 @@ public class TeamManagmentImpl implements TeamManagment {
 
     @Override
     public void addUser(int team_id, int user_id) {
+        if (!teamRep.existsById(team_id) || !userRep.existsById(user_id))
+            return;
         var team = teamRep.getById(team_id);
         var user = userRep.getById(user_id);
         user.setCurrent_team(team);
@@ -37,8 +39,15 @@ public class TeamManagmentImpl implements TeamManagment {
 
     @Override
     public void removeFromTeam(int user_id) {
+        if (!userRep.existsById(user_id))
+            return;
         var user = userRep.getById(user_id);
         user.setCurrent_team(null);
         userRep.save(user);
+    }
+
+    @Override
+    public Team getTeam(int id) {
+        return teamRep.findById(id).orElse(null);
     }
 }

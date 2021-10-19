@@ -7,13 +7,14 @@ import javax.persistence.*;
 public class User {
 
     @Id
+    @GeneratedValue
     private int id;
 
     @Column(name="name")
     private String name;
 
     @ManyToOne
-    @JoinColumn(name="team_id")
+    @JoinColumn(name = "team_id")
     private Team current_team;
 
     @Column(name="click_count")
@@ -27,6 +28,10 @@ public class User {
         this.password = password;
         clickCount = 0;
         current_team = null;
+    }
+
+    public User() {
+        super();
     }
 
     public int getId() {

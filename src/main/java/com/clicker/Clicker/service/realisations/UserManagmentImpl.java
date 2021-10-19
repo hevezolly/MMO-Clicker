@@ -26,6 +26,8 @@ public class UserManagmentImpl implements UserManagment {
 
     @Override
     public void renameUser(int user_id, String new_name) {
+        if (!userRep.existsById(user_id))
+            return;
         var user = userRep.getById(user_id);
         user.setName(new_name);
         userRep.save(user);
@@ -33,6 +35,8 @@ public class UserManagmentImpl implements UserManagment {
 
     @Override
     public void userClick(int user_id) {
+        if (!userRep.existsById(user_id))
+            return;
         var user = userRep.getById(user_id);
         user.incrementClicks();
         userRep.save(user);
@@ -41,5 +45,12 @@ public class UserManagmentImpl implements UserManagment {
             team.clickIncrement();
             teamRep.save(team);
         }
+    }
+
+    @Override
+    public User getUser(int id) {
+        if (!userRep.existsById(id))
+            return null;
+        return userRep.getById(id);
     }
 }
