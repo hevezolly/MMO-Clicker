@@ -21,8 +21,7 @@ public class RegistrationController {
     @GetMapping("/registration")
     public String registration(Model model) {
         model.addAttribute("userForm", new UserForm());
-
-        return "registration"; //TODO: registration.jsp
+        return "registration";
     }
 
     @PostMapping("/registration")

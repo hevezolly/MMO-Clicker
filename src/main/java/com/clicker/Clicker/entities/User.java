@@ -14,8 +14,6 @@ import java.util.Set;
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(name = "username")
     private String username;
 
