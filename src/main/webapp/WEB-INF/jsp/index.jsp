@@ -17,6 +17,9 @@
     <h4><a href="/registration">Зарегистрироваться</a></h4>
   </sec:authorize>
   <sec:authorize access="isAuthenticated()">
+    <form method="POST" action=#{"ТУТ функцию надо вызывать"}>
+        <button type="submit">Click</button>
+    </form>
     <h4><a href="/logout">Выйти</a></h4>
   </sec:authorize>
 </div>
