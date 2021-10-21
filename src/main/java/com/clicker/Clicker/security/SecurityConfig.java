@@ -35,6 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .formLogin()
                     .loginPage("/login") //название файла, должен быть login.jsp + запись в application.properties
                     .defaultSuccessUrl("/")
+                    .failureUrl("/login?error=true")
                     .permitAll()
                 .and()
                     .logout()

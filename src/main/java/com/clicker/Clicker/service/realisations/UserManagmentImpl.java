@@ -13,6 +13,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
+
 @Service
 public class UserManagmentImpl implements UserManagment, UserDetailsService {
 
@@ -33,9 +35,11 @@ public class UserManagmentImpl implements UserManagment, UserDetailsService {
         if (userRep.existsById(name))
             return UserRequestResult.Exists;
         var u = new User();
+        var roles = new HashSet<Role>();
+        roles.add(Role.getUser());
         u.setUsername(name);
         u.setPassword(bCryptPasswordEncoder.encode(password));
-        u.getRoles().add(Role.getUser());
+        u.setRoles(roles);
         userRep.save(u);
         return UserRequestResult.Success;
     }
@@ -57,9 +61,7 @@ public class UserManagmentImpl implements UserManagment, UserDetailsService {
 
     @Override
     public User getUser(String name) {
-        if (!userRep.existsById(name))
-            return null;
-        return userRep.getById(name);
+        return userRep.findById(name).orElse(null);
     }
 
     @Override
@@ -67,6 +69,6 @@ public class UserManagmentImpl implements UserManagment, UserDetailsService {
         var u = getUser(s);
         if (u != null)
             return u;
-        throw new UsernameNotFoundException("");
+        throw new UsernameNotFoundException("User with name " + s + " is not found");
     }
 }

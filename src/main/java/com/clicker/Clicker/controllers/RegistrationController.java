@@ -5,6 +5,8 @@ import com.clicker.Clicker.entities.UserForm;
 import com.clicker.Clicker.service.interfaces.UserManagment;
 import com.clicker.Clicker.service.interfaces.UserRequestResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -44,7 +46,10 @@ public class RegistrationController {
             default:
                 return "registration";
         }
-
+        var auth = SecurityContextHolder.getContext().getAuthentication();
+        var user = userService.getUser(userForm.getUsername());
+        auth = new UsernamePasswordAuthenticationToken(user, userForm.getPassword(), user.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(auth);
         return "redirect:/";
     }
 }

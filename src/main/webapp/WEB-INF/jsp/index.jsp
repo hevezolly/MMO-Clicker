@@ -7,7 +7,6 @@
 <head>
   <title>Главная</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <link rel="stylesheet" type="text/css" href="${contextPath}/resources/css/style.css">
 </head>
 <body>
 <div>
@@ -17,8 +16,10 @@
     <h4><a href="/registration">Зарегистрироваться</a></h4>
   </sec:authorize>
   <sec:authorize access="isAuthenticated()">
-    <form method="POST" action=#{"ТУТ функцию надо вызывать"}>
-        <button type="submit">Click</button>
+    <p>click count:</p>
+    <p>${click_count}</p>
+    <form method="POST">
+        <button type="submit" name="click" value="clicked">Click</button>
     </form>
     <h4><a href="/logout">Выйти</a></h4>
   </sec:authorize>

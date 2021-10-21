@@ -1,5 +1,6 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
+<%@ taglib prefix='c' uri='http://java.sun.com/jsp/jstl/core' %>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" errorPage="loginError" %>
 
 <!DOCTYPE html>
 <html>
@@ -12,6 +13,7 @@
 <sec:authorize access="isAuthenticated()">
   <% response.sendRedirect("/"); %>
 </sec:authorize>
+<c:if test="${not empty param.error}">Wrong username or password</c:if>
 <div>
   <form method="POST" action="/login">
     <h2>Вход в систему</h2>

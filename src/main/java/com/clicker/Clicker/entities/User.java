@@ -17,7 +17,7 @@ public class User implements UserDetails {
     @Column(name = "username")
     private String username;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "team_name")
     private Team current_team;
 
@@ -31,7 +31,6 @@ public class User implements UserDetails {
     private Set<Role> roles;
 
     public User() {
-        roles = new HashSet<Role>();
     }
 
     @Override
