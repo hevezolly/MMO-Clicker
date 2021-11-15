@@ -50,4 +50,8 @@ public class Team{
     public void setAdmin(User admin) {
         this.admin = admin;
     }
+
+    public List<User> getUsers() {
+        return users;
+    }
 }
