@@ -10,8 +10,6 @@ import java.util.List;
 public class Team {
 
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(name = "team_name")
     private String team_name;
 

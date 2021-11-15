@@ -27,7 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                     .antMatchers("/registration*").not().fullyAuthenticated()
-                    .antMatchers("/create_team").not().permitAll()
+                    .antMatchers("/create_team").fullyAuthenticated()
                     .antMatchers("/team?leader=false").permitAll()
                     .antMatchers("/team?leder=true").hasRole("LEADER")
                 .anyRequest().authenticated()
