@@ -1,6 +1,7 @@
 package com.clicker.Clicker.entities;
 
 import com.clicker.Clicker.entities.items.Item;
+import com.clicker.Clicker.entities.items.items_users;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,6 +32,9 @@ public class User implements UserDetails {
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
+
+    @OneToMany(mappedBy = "owner")
+    private List<items_users> items;
 
     public User() {
     }
@@ -103,4 +107,12 @@ public class User implements UserDetails {
     }
 
     public Boolean isLeader() {return getRoles().contains(Role.getLeader());}
+
+    public List<items_users> getItems() {
+        return items;
+    }
+
+    public void setItems(List<items_users> items) {
+        this.items = items;
+    }
 }

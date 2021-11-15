@@ -1,5 +1,7 @@
 package com.clicker.Clicker.entities.items;
 
+import com.clicker.Clicker.entities.User;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
@@ -18,6 +20,7 @@ public class MultiplayItem extends Item {
     private double multiplier;
 
     public MultiplayItem() {
+        this.priority = 10;
     }
 
     public MultiplayItem(double multiplier, String name, String desc) {
@@ -27,7 +30,7 @@ public class MultiplayItem extends Item {
     }
 
     @Override
-    public long modiphyClicks(long clickCount) {
-        return Math.round(clickCount * multiplier);
+    public long modiphyClicks(long clickCount, User user, int numberOfUses) {
+        return Math.round(clickCount * Math.pow(multiplier, numberOfUses));
     }
 }
