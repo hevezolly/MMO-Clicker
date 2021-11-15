@@ -6,5 +6,6 @@ public interface TeamManagment {
     TeamRequestResult createTeam(String admin_username, String team_name);
     TeamRequestResult addUser(String team_name, String user_name);
     TeamRequestResult removeFromTeam(String user_name);
+    TeamRequestResult deleteTeam(Team team);
     Team getTeam(String name);
 }

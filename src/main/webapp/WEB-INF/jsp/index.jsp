@@ -19,8 +19,11 @@
     <p>click count:</p>
     <p>${click_count}</p>
     <form method="POST">
-        <button type="submit" name="click" value="clicked">Click</button>
+      <button type="submit" name="click" value="clicked">Click</button>
     </form>
+    <h4><a href="/create_team">Создать команду</a></h4>
+    <h4><a href="/join_team">присоедениться к команде</a></h4>
+    <h4><a href="/team">моя команда</a></h4>
     <h4><a href="/logout">Выйти</a></h4>
   </sec:authorize>
 </div>
