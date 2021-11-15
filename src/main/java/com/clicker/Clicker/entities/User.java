@@ -1,5 +1,6 @@
 package com.clicker.Clicker.entities;
 
+import com.clicker.Clicker.entities.items.Item;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -7,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -22,7 +24,7 @@ public class User implements UserDetails {
     private Team current_team;
 
     @Column(name="click_count")
-    private int clickCount = 0;
+    private long clickCount = 0;
 
     @Column(name="password")
     private String password;
@@ -76,7 +78,7 @@ public class User implements UserDetails {
         this.current_team = current_team;
     }
 
-    public void setClickCount(int clickCount) {
+    public void setClickCount(long clickCount) {
         this.clickCount = clickCount;
     }
 
@@ -92,11 +94,13 @@ public class User implements UserDetails {
         return current_team;
     }
 
-    public int getClickCount() {
+    public long getClickCount() {
         return clickCount;
     }
 
     public Set<Role> getRoles() {
         return roles;
     }
+
+    public Boolean isLeader() {return getRoles().contains(Role.getLeader());}
 }

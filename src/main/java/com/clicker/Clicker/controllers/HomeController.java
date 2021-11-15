@@ -1,13 +1,8 @@
 package com.clicker.Clicker.controllers;
 
-import com.clicker.Clicker.entities.UserForm;
 import com.clicker.Clicker.service.interfaces.UserManagment;
-import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,10 +17,9 @@ public class HomeController {
 
     @GetMapping("/")
     public String Index(Model model) {
-        var authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!(authentication instanceof AnonymousAuthenticationToken)) {
-            var name = ((UserDetails)authentication.getPrincipal()).getUsername();
-            var count = userManagment.getUser(name).getClickCount();
+        var user = userManagment.getAuthUser();
+        if (user != null) {
+            var count = user.getClickCount();
             model.addAttribute("click_count", count);
         }
         return "index";
@@ -35,11 +29,10 @@ public class HomeController {
     @PostMapping("/")
     public String someMethod(@RequestParam("click") String clickValue, Model model)
     {
-        var userDetail = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        var username = ((UserDetails)userDetail).getUsername();
+        var user = userManagment.getAuthUser();
         if ("clicked".equals(clickValue))
-            userManagment.userClick(username);
-        var count = userManagment.getUser(username).getClickCount();
+            userManagment.userClick(user.getUsername());
+        var count = userManagment.getUser(user.getUsername()).getClickCount();
         model.addAttribute("click_count", count);
         return "index";
     }
