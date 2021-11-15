@@ -1,6 +1,5 @@
 package com.clicker.Clicker.entities;
 
-import com.clicker.Clicker.entities.items.Item;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
