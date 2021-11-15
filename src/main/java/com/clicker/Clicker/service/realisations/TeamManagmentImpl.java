@@ -16,7 +16,6 @@ public class TeamManagmentImpl implements TeamManagment{
     private UserRepository userRep;
 
 
-
     public TeamManagmentImpl(TeamRepository teamRep, UserRepository userRep) {
         this.teamRep = teamRep;
         this.userRep = userRep;

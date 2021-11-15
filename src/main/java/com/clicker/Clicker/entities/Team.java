@@ -1,10 +1,12 @@
 package com.clicker.Clicker.entities;
 
 import com.clicker.Clicker.entities.items.Item;
+import com.clicker.Clicker.entities.items.items_teams;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="Teams")
@@ -23,6 +25,9 @@ public class Team{
 
     @OneToMany(mappedBy="current_team")
     private List<User> users;
+
+    @OneToMany(mappedBy = "owner")
+    private Set<items_teams> items_teams;
 
     public Team() {
     }

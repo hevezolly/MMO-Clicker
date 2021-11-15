@@ -1,5 +1,7 @@
 package com.clicker.Clicker.entities.items;
 
+import com.clicker.Clicker.entities.User;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
@@ -18,16 +20,18 @@ public class AddItem extends Item {
     private long number;
 
     public AddItem() {
+        this.priority = 0;
     }
 
     public AddItem(long number, String name, String desc) {
         this.number = number;
         this.name = name;
         this.description = desc;
+        this.priority = 0;
     }
 
     @Override
-    public long modiphyClicks(long clickCount) {
+    public long modiphyClicks(long clickCount, User user) {
         return clickCount + number;
     }
 }

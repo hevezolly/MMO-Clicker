@@ -1,5 +1,7 @@
 package com.clicker.Clicker.entities.items;
 
+import com.clicker.Clicker.entities.User;
+
 import javax.persistence.*;
 
 @Entity
@@ -20,6 +22,8 @@ public abstract class Item {
 
     protected boolean forTeams;
 
+    protected int priority;
+
     public String getName() {
         return name;
     }
@@ -36,7 +40,7 @@ public abstract class Item {
         this.name = name;
     }
 
-    public abstract long modiphyClicks(long clickCount);
+    public abstract long modiphyClicks(long clickCount, User user);
 
     public String getDescription() {
         return description;
@@ -44,5 +48,9 @@ public abstract class Item {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getPriority() {
+        return priority;
     }
 }
