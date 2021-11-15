@@ -48,7 +48,7 @@ public class CreateTeamController {
                 model.addAttribute("Error", "что-то пошло не так");
                 return "create_team";
         }
-        return "redirect:/team?leader=true";
+        return "redirect:/team";
     }
 }
 
