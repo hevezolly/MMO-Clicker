@@ -59,5 +59,8 @@ public class Team{
 
     public void setItems(List<items_teams> items) {
         this.items = items;
+
+    public List<User> getUsers() {
+        return users;
     }
 }

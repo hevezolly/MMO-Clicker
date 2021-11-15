@@ -7,6 +7,7 @@ import com.clicker.Clicker.repos.UserRepository;
 import com.clicker.Clicker.service.interfaces.TeamRequestResult;
 import com.clicker.Clicker.service.interfaces.UserRequestResult;
 import com.clicker.Clicker.service.interfaces.TeamManagment;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,6 +17,7 @@ public class TeamManagmentImpl implements TeamManagment{
     private UserRepository userRep;
 
 
+    @Autowired
     public TeamManagmentImpl(TeamRepository teamRep, UserRepository userRep) {
         this.teamRep = teamRep;
         this.userRep = userRep;
@@ -68,6 +70,17 @@ public class TeamManagmentImpl implements TeamManagment{
             return TeamRequestResult.UserIsLeader;
         user.setCurrent_team(null);
         userRep.save(user);
+        return TeamRequestResult.Success;
+    }
+
+    @Override
+    public TeamRequestResult deleteTeam(Team team) {
+        for (var user:
+             team.getUsers()) {
+            user.setCurrent_team(null);
+            userRep.save(user);
+        }
+        teamRep.deleteById(team.getTeam_name());
         return TeamRequestResult.Success;
     }
 

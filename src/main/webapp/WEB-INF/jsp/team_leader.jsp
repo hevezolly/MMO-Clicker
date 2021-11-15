@@ -6,6 +6,11 @@
 <html>
 <head>
   <title>leader</title>
+  <p>team click count:</p>
+    <p>${team_click_count}</p>
+    <form method="POST">
+         <button type="submit" name="command" value="delete">Delete team</button>
+    </form>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
