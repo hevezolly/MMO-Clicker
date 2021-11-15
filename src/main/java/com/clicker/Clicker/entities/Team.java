@@ -1,5 +1,6 @@
 package com.clicker.Clicker.entities;
 
+import com.clicker.Clicker.entities.items.Item;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -7,14 +8,14 @@ import java.util.List;
 
 @Entity
 @Table(name="Teams")
-public class Team {
+public class Team{
 
     @Id
     @Column(name = "team_name")
     private String team_name;
 
     @Column(name="click_count")
-    private int click_count = 0;
+    private long click_count = 0;
 
     @OneToOne
     @JoinColumn(name="admin")
@@ -34,11 +35,11 @@ public class Team {
         this.team_name = team_name;
     }
 
-    public int getClick_count() {
+    public long getClick_count() {
         return click_count;
     }
 
-    public void setClick_count(int click_count) {
+    public void setClick_count(long click_count) {
         this.click_count = click_count;
     }
 

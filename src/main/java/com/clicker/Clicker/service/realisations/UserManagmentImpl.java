@@ -7,6 +7,7 @@ import com.clicker.Clicker.repos.UserRepository;
 import com.clicker.Clicker.service.interfaces.UserRequestResult;
 import com.clicker.Clicker.service.interfaces.UserManagment;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -62,6 +63,16 @@ public class UserManagmentImpl implements UserManagment, UserDetailsService {
     @Override
     public User getUser(String name) {
         return userRep.findById(name).orElse(null);
+    }
+
+    @Override
+    public User getAuthUser() {
+        var userDetail = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (!(userDetail instanceof UserDetails))
+            return null;
+        var username = ((UserDetails)userDetail).getUsername();
+        var user = getUser(username);
+        return user;
     }
 
     @Override
