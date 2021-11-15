@@ -7,7 +7,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -23,7 +22,7 @@ public class User implements UserDetails {
     private Team current_team;
 
     @Column(name="click_count")
-    private long clickCount = 0;
+    private int clickCount = 0;
 
     @Column(name="password")
     private String password;
@@ -77,7 +76,7 @@ public class User implements UserDetails {
         this.current_team = current_team;
     }
 
-    public void setClickCount(long clickCount) {
+    public void setClickCount(int clickCount) {
         this.clickCount = clickCount;
     }
 
@@ -93,13 +92,11 @@ public class User implements UserDetails {
         return current_team;
     }
 
-    public long getClickCount() {
+    public int getClickCount() {
         return clickCount;
     }
 
     public Set<Role> getRoles() {
         return roles;
     }
-
-    public Boolean isLeader() {return getRoles().contains(Role.getLeader());}
 }

@@ -17,9 +17,6 @@
       <form:input type="text" path="team_name" placeholder="TeamName"
                   autofocus="true"></form:input>
       <form:errors path="team_name"></form:errors>
-        ${teamNameError}
-      <form:errors path="team_name"></form:errors>
-        ${Error}
     </div>
     <button type="submit">Создать</button>
   </form:form>

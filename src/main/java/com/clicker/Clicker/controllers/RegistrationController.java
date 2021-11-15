@@ -1,7 +1,9 @@
 package com.clicker.Clicker.controllers;
 
-import com.clicker.Clicker.entities.forms.UserForm;
+import com.clicker.Clicker.entities.User;
+import com.clicker.Clicker.entities.UserForm;
 import com.clicker.Clicker.service.interfaces.UserManagment;
+import com.clicker.Clicker.service.interfaces.UserRequestResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

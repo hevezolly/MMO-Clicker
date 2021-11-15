@@ -1,4 +1,4 @@
-package com.clicker.Clicker.entities.forms;
+package com.clicker.Clicker.entities;
 
 public class TeamForm {
     private String team_name;
