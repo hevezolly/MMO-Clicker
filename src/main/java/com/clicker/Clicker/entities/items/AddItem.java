@@ -31,7 +31,8 @@ public class AddItem extends Item {
     }
 
     @Override
-    public long modiphyClicks(long clickCount, User user) {
-        return clickCount + number;
+    public long modiphyClicks(long clickCount, User user, int numberOfUses)
+    {
+        return clickCount + number * numberOfUses;
     }
 }

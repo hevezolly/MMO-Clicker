@@ -30,7 +30,7 @@ public class MultiplayItem extends Item {
     }
 
     @Override
-    public long modiphyClicks(long clickCount, User user) {
-        return Math.round(clickCount * multiplier);
+    public long modiphyClicks(long clickCount, User user, int numberOfUses) {
+        return Math.round(clickCount * Math.pow(multiplier, numberOfUses));
     }
 }

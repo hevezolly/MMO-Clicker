@@ -40,7 +40,7 @@ public abstract class Item {
         this.name = name;
     }
 
-    public abstract long modiphyClicks(long clickCount, User user);
+    public abstract long modiphyClicks(long clickCount, User user, int numberOfUses);
 
     public String getDescription() {
         return description;

@@ -34,7 +34,7 @@ public class User implements UserDetails {
     private Set<Role> roles;
 
     @OneToMany(mappedBy = "owner")
-    private Set<items_users> items_users;
+    private List<items_users> items;
 
     public User() {
     }
@@ -107,4 +107,12 @@ public class User implements UserDetails {
     }
 
     public Boolean isLeader() {return getRoles().contains(Role.getLeader());}
+
+    public List<items_users> getItems() {
+        return items;
+    }
+
+    public void setItems(List<items_users> items) {
+        this.items = items;
+    }
 }
