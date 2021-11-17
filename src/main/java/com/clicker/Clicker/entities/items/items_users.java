@@ -18,6 +18,11 @@ public class items_users extends MultipleItems {
     public items_users() {
     }
 
+    public items_users(ItemUserKey key) {
+        this.key = key;
+        this.itemNumber = 0;
+    }
+
     public User getOwner() {
         return owner;
     }

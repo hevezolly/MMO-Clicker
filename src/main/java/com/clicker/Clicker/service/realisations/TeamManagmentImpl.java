@@ -2,8 +2,10 @@ package com.clicker.Clicker.service.realisations;
 
 import com.clicker.Clicker.entities.Role;
 import com.clicker.Clicker.entities.Team;
+import com.clicker.Clicker.entities.items.Item;
 import com.clicker.Clicker.repos.TeamRepository;
 import com.clicker.Clicker.repos.UserRepository;
+import com.clicker.Clicker.service.interfaces.ItemManagment;
 import com.clicker.Clicker.service.interfaces.TeamRequestResult;
 import com.clicker.Clicker.service.interfaces.UserRequestResult;
 import com.clicker.Clicker.service.interfaces.TeamManagment;
@@ -16,11 +18,14 @@ public class TeamManagmentImpl implements TeamManagment{
     private TeamRepository teamRep;
     private UserRepository userRep;
 
+    private ItemManagment itemManagment;
+
 
     @Autowired
-    public TeamManagmentImpl(TeamRepository teamRep, UserRepository userRep) {
+    public TeamManagmentImpl(TeamRepository teamRep, UserRepository userRep, ItemManagment itemManagment) {
         this.teamRep = teamRep;
         this.userRep = userRep;
+        this.itemManagment = itemManagment;
     }
 
     @Override
@@ -87,5 +92,18 @@ public class TeamManagmentImpl implements TeamManagment{
     @Override
     public Team getTeam(String name) {
         return teamRep.findById(name).orElse(null);
+    }
+
+    @Override
+    public TeamRequestResult BuyItem(Team team, Item item) {
+        if (team.getClick_count() < item.getCost())
+            return TeamRequestResult.NotEnoughMoney;
+
+        itemManagment.AddItemTo(item, team);
+        team.setClick_count(team.getClick_count() - item.getCost());
+
+        teamRep.save(team);
+
+        return TeamRequestResult.Success;
     }
 }
