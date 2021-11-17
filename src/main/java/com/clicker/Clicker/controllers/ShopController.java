@@ -2,6 +2,7 @@ package com.clicker.Clicker.controllers;
 
 import com.clicker.Clicker.entities.Team;
 import com.clicker.Clicker.entities.User;
+import com.clicker.Clicker.entities.forms.ItemForm;
 import com.clicker.Clicker.entities.items.Item;
 import com.clicker.Clicker.service.interfaces.*;
 import org.dom4j.rule.Mode;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 @Controller
@@ -32,15 +35,23 @@ public class ShopController {
         compiledPattern = Pattern.compile(commandFormat);
     }
 
+    private ItemForm[] getItems(List<Item> items){
+        var newItems = new ItemForm[items.size()];
+        for (int i = 0; i < items.size(); i++) {
+            newItems[i] = new ItemForm(i, items.get(i));
+        }
+        return newItems;
+    }
+
     @GetMapping("/shop")
     private String getShop(Model model){
         var user = userManagment.getAuthUser();
         if (user == null) {
             return "redirect:/";
         }
-        model.addAttribute("userItems", itemManagment.GetUserItems());
+        model.addAttribute("userItems", getItems(itemManagment.GetUserItems()));
         if (user.isLeader())
-            model.addAttribute("teamItems", itemManagment.GetTeamItems());
+            model.addAttribute("teamItems", getItems(itemManagment.GetTeamItems()));
         return "shop";
     }
 
