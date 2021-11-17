@@ -1,4 +1,4 @@
-package com.clicker.Clicker.entities;
+package com.clicker.Clicker.entities.forms;
 
 import java.util.Objects;
 

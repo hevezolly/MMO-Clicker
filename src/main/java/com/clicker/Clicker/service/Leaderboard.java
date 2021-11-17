@@ -1,6 +1,6 @@
 package com.clicker.Clicker.service;
 
-import com.clicker.Clicker.entities.LeaderboardRow;
+import com.clicker.Clicker.entities.forms.LeaderboardRow;
 import com.clicker.Clicker.entities.Team;
 import com.clicker.Clicker.repos.TeamRepository;
 import com.clicker.Clicker.repos.UserRepository;

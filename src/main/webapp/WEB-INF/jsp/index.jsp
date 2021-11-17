@@ -28,6 +28,7 @@
     <c:if test="${inTeam == true}">
     <h4><a href="/team">моя команда</a></h4>
     </c:if>
+    <h4><a href="/shop">Магазин</a></h4>
     <h4><a href="/leaderboards">Лидерборды</a></h4>
     <h4><a href="/logout">Выйти из пользователя</a></h4>
   </sec:authorize>
