@@ -18,6 +18,11 @@ public class items_teams extends MultipleItems {
     public items_teams() {
     }
 
+    public items_teams(ItemTeamKey key) {
+        this.key = key;
+        this.itemNumber = 0;
+    }
+
     public Team getOwner() {
         return owner;
     }

@@ -2,9 +2,11 @@ package com.clicker.Clicker.service.realisations;
 
 import com.clicker.Clicker.entities.Role;
 import com.clicker.Clicker.entities.User;
+import com.clicker.Clicker.entities.items.Item;
 import com.clicker.Clicker.entities.items.MultipleItems;
 import com.clicker.Clicker.repos.TeamRepository;
 import com.clicker.Clicker.repos.UserRepository;
+import com.clicker.Clicker.service.interfaces.ItemManagment;
 import com.clicker.Clicker.service.interfaces.UserRequestResult;
 import com.clicker.Clicker.service.interfaces.UserManagment;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +25,16 @@ public class UserManagmentImpl implements UserManagment, UserDetailsService {
 
     private TeamRepository teamRep;
     private UserRepository userRep;
+    private ItemManagment itemManagment;
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserManagmentImpl(TeamRepository teamRep, UserRepository userRep) {
+    public UserManagmentImpl(TeamRepository teamRep, UserRepository userRep, ItemManagment itemManagment) {
         this.teamRep = teamRep;
         this.userRep = userRep;
+        this.itemManagment = itemManagment;
     }
 
     @Override
@@ -75,6 +79,22 @@ public class UserManagmentImpl implements UserManagment, UserDetailsService {
             team.setClick_count(team.getClick_count()+clickCount);
             teamRep.save(team);
         }
+        return UserRequestResult.Success;
+    }
+
+    @Override
+    public UserRequestResult buyItem(String user_name, Item item) {
+        var user = getUser(user_name);
+        if (user == null)
+            return UserRequestResult.NotExists;
+        if (user.getClickCount() < item.getCost())
+            return UserRequestResult.NotEnoughMoney;
+
+        itemManagment.AddItemTo(item, user);
+        user.setClickCount(user.getClickCount() - item.getCost());
+
+        userRep.save(user);
+
         return UserRequestResult.Success;
     }
 

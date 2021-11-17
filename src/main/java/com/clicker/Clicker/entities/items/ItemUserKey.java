@@ -12,6 +12,11 @@ public class ItemUserKey implements Serializable {
     public ItemUserKey() {
     }
 
+    public ItemUserKey(int itemKey, String username) {
+        this.itemKey = itemKey;
+        this.username = username;
+    }
+
     public int getItemKey() {
         return itemKey;
     }

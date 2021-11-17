@@ -16,6 +16,8 @@ public abstract class Item {
     @Id
     private int id;
 
+    protected Long cost;
+
     protected String name;
 
     protected String description;
@@ -23,6 +25,18 @@ public abstract class Item {
     protected boolean forTeams;
 
     protected int priority;
+
+    public Long getCost() {
+        return cost;
+    }
+
+    public void setCost(Long cost) {
+        this.cost = cost;
+    }
+
+    public int getId() {
+        return id;
+    }
 
     public String getName() {
         return name;

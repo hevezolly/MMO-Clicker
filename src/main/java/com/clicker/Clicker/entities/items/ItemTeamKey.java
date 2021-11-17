@@ -12,6 +12,11 @@ public class ItemTeamKey implements Serializable {
     public ItemTeamKey() {
     }
 
+    public ItemTeamKey(int itemId, String teamName) {
+        this.itemId = itemId;
+        this.teamName = teamName;
+    }
+
     public int getItemId() {
         return itemId;
     }

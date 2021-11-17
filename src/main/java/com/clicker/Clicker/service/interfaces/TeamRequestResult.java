@@ -6,5 +6,6 @@ public enum TeamRequestResult {
     UserNotExists,
     UserHasTeam,
     UserIsLeader,
+    NotEnoughMoney,
     Success
 }
