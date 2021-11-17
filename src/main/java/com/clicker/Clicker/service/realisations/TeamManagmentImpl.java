@@ -3,6 +3,8 @@ package com.clicker.Clicker.service.realisations;
 import com.clicker.Clicker.entities.Role;
 import com.clicker.Clicker.entities.Team;
 import com.clicker.Clicker.entities.items.Item;
+import com.clicker.Clicker.repos.ItemsTeamsRepository;
+import com.clicker.Clicker.repos.ItemsUsersRepository;
 import com.clicker.Clicker.repos.TeamRepository;
 import com.clicker.Clicker.repos.UserRepository;
 import com.clicker.Clicker.service.interfaces.ItemManagment;
@@ -17,15 +19,18 @@ public class TeamManagmentImpl implements TeamManagment{
 
     private TeamRepository teamRep;
     private UserRepository userRep;
+    private ItemsTeamsRepository itemsTeamsRepository;
 
     private ItemManagment itemManagment;
 
 
     @Autowired
-    public TeamManagmentImpl(TeamRepository teamRep, UserRepository userRep, ItemManagment itemManagment) {
+    public TeamManagmentImpl(TeamRepository teamRep, UserRepository userRep, ItemManagment itemManagment,
+                             ItemsTeamsRepository itemsTeamsRepository) {
         this.teamRep = teamRep;
         this.userRep = userRep;
         this.itemManagment = itemManagment;
+        this.itemsTeamsRepository = itemsTeamsRepository;
     }
 
     @Override
@@ -39,7 +44,7 @@ public class TeamManagmentImpl implements TeamManagment{
             return TeamRequestResult.UserHasTeam;
         var t = new Team();
         t.setAdmin(leader);
-        t.setClick_count(leader.getClickCount());
+        t.setClick_count(0);
         t.setTeam_name(team_name);
         teamRep.save(t);
         leader.setCurrent_team(t);
@@ -85,6 +90,7 @@ public class TeamManagmentImpl implements TeamManagment{
             user.setCurrent_team(null);
             userRep.save(user);
         }
+        itemsTeamsRepository.deleteAll(itemsTeamsRepository.findByIdTeamName(team.getTeam_name()));
         teamRep.deleteById(team.getTeam_name());
         return TeamRequestResult.Success;
     }

@@ -10,13 +10,15 @@
 </head>
 <body>
 <h3>Предметы для игрока</h3>
+<h2>баланс игрока: ${userClicks}</h2>
 <table border="1" cellspacing="0" cellpadding="2">
-    <c:forEach items="${teamItems}" var="item">
+    <c:forEach items="${userItems}" var="item">
         <tr>
             <form method="POST">
                 <button type="submit" name="command" value="buy_user_${item.index}">
                     <h4>${item.name}</h4>
                     <p>${item.description}</p>
+                    <p>цена: ${item.cost}</p>
                 </button>
             </form>
         </tr>
@@ -24,6 +26,7 @@
 </table>
 <c:if test="${not empty teamItems}">
     <h3>Предметы для команды</h3>
+    <h2>баланс команды: ${teamClicks}</h2>
     <table border="1" cellspacing="0" cellpadding="2">
         <c:forEach items="${teamItems}" var="item">
             <tr>
@@ -31,6 +34,7 @@
                     <button type="submit" name="command" value="buy_team_${item.index}">
                         <h4>${item.name}</h4>
                         <p>${item.description}</p>
+                        <p>цена: ${item.cost}</p>
                     </button>
                 </form>
             </tr>

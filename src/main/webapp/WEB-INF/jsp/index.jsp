@@ -16,8 +16,12 @@
     <h4><a href="/registration">Зарегистрироваться</a></h4>
   </sec:authorize>
   <sec:authorize access="isAuthenticated()">
-    <p>Количество кликов:</p>
+    <p>Количество кликов игрока:</p>
     <p>${click_count}</p>
+    <c:if test="${inTeam == true}">
+        <p>Количество кликов команды:</p>
+        <p>${teamClickCount}</p>
+    </c:if>
     <form method="POST">
       <button type="submit" name="click" value="clicked">Клик</button>
     </form>

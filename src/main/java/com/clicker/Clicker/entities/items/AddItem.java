@@ -23,11 +23,13 @@ public class AddItem extends Item {
         this.priority = 0;
     }
 
-    public AddItem(long number, String name, String desc) {
+    public AddItem(long number, String name, String desc, boolean forTeams, long cost) {
         this.number = number;
         this.name = name;
         this.description = desc;
+        this.forTeams = forTeams;
         this.priority = 0;
+        this.cost = cost;
     }
 
     @Override

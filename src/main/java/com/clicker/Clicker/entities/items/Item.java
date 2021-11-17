@@ -14,6 +14,7 @@ public abstract class Item {
     }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     protected Long cost;

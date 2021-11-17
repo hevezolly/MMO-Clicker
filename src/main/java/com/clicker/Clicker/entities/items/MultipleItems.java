@@ -7,7 +7,7 @@ public abstract class MultipleItems {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @MapsId("itemId")
-    @JoinColumn(name="id")
+    @JoinColumn(name="item_id")
     protected Item item;
 
     protected int itemNumber;

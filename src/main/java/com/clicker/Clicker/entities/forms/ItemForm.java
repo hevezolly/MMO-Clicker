@@ -7,11 +7,21 @@ public class ItemForm {
     private int index;
     private String name;
     private String description;
+    private Long cost;
 
-    public ItemForm(int index, Item item) {
-        this.index = index;
+    public ItemForm(Item item) {
+        this.index = item.getId();
         this.name = item.getName();
         this.description = item.getDescription();
+        this.cost = item.getCost();
+    }
+
+    public Long getCost() {
+        return cost;
+    }
+
+    public void setCost(Long cost) {
+        this.cost = cost;
     }
 
     public int getIndex() {

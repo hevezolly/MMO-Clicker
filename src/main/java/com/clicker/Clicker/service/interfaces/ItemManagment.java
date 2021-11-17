@@ -12,6 +12,5 @@ public interface ItemManagment {
     List<Item> GetUserItems();
     void AddItemTo(Item item, User user);
     void AddItemTo(Item item, Team team);
-    Item GetIndexedTeamItem(int index);
-    Item GetIndexedUserItem(int index);
+    Item GetIndexedItem(int index);
 }

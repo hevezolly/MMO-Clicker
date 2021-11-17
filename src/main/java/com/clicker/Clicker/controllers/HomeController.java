@@ -26,7 +26,11 @@ public class HomeController {
         if (user != null) {
             var count = user.getClickCount();
             model.addAttribute("click_count", count);
-            model.addAttribute("inTeam", user.getCurrent_team() != null);
+            var team = user.getCurrent_team();
+            model.addAttribute("inTeam", team != null);
+            if (team != null)
+                model.addAttribute("teamClickCount", team.getClick_count());
+
         }
         return "index";
     }
@@ -36,6 +40,8 @@ public class HomeController {
     public String someMethod(@RequestParam("click") String clickValue, Model model)
     {
         var user = userManagment.getAuthUser();
+        if (user == null)
+            return "login:/";
         if ("clicked".equals(clickValue))
             userManagment.userClick(user.getUsername());
         return getPage(model, user);

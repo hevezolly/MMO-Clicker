@@ -8,7 +8,7 @@ import javax.persistence.*;
 public class items_users extends MultipleItems {
 
     @EmbeddedId
-    private ItemUserKey key;
+    private ItemUserKey id;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @MapsId("username")
@@ -19,7 +19,7 @@ public class items_users extends MultipleItems {
     }
 
     public items_users(ItemUserKey key) {
-        this.key = key;
+        this.id = key;
         this.itemNumber = 0;
     }
 

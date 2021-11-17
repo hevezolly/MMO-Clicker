@@ -39,7 +39,9 @@ public class ItemManagmentImpl implements ItemManagment {
         if (itemsUsersRep.existsById(key)){
             itemUser = itemsUsersRep.getById(key);
         }
+        itemUser.setItem(item);
         itemUser.setItemNumber(itemUser.getItemNumber() + 1);
+        itemUser.setOwner(user);
         itemsUsersRep.save(itemUser);
     }
 
@@ -50,23 +52,15 @@ public class ItemManagmentImpl implements ItemManagment {
         if (itemsTeamsRep.existsById(key)){
             itemTeam = itemsTeamsRep.getById(key);
         }
+        itemTeam.setItem(item);
         itemTeam.setItemNumber(itemTeam.getItemNumber() + 1);
+        itemTeam.setOwner(team);
         itemsTeamsRep.save(itemTeam);
     }
 
-    private Item GetIndexedItem(List<Item> items, int index){
-        if (index < 0 || index >= items.size())
-            return null;
-        return items.get(index);
-    }
-
-    @Override
-    public Item GetIndexedTeamItem(int index) {
-        return GetIndexedItem(GetTeamItems(), index);
-    }
-
-    @Override
-    public Item GetIndexedUserItem(int index) {
-        return GetIndexedItem(GetUserItems(), index);
+    public Item GetIndexedItem(int index){
+        if (itemRep.existsById(index))
+            return itemRep.getById(index);
+        return null;
     }
 }

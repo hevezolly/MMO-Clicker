@@ -23,14 +23,16 @@ public class MultiplayItem extends Item {
         this.priority = 10;
     }
 
-    public MultiplayItem(double multiplier, String name, String desc) {
+    public MultiplayItem(double multiplier, String name, String desc, boolean isForTeam, long cost) {
         this.multiplier = multiplier;
         this.name = name;
         this.description = desc;
+        this.forTeams = isForTeam;
+        this.cost = cost;
     }
 
     @Override
     public long modiphyClicks(long clickCount, User user, int numberOfUses) {
-        return Math.round(clickCount * Math.pow(multiplier, numberOfUses));
+        return Math.round(clickCount * (multiplier * numberOfUses + 1));
     }
 }

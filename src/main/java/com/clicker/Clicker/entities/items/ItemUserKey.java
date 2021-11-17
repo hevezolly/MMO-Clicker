@@ -6,23 +6,24 @@ import java.util.Objects;
 
 @Embeddable
 public class ItemUserKey implements Serializable {
-    private int itemKey;
+
+    private int itemId;
     private String username;
 
     public ItemUserKey() {
     }
 
     public ItemUserKey(int itemKey, String username) {
-        this.itemKey = itemKey;
+        this.itemId = itemKey;
         this.username = username;
     }
 
-    public int getItemKey() {
-        return itemKey;
+    public int getItemId() {
+        return itemId;
     }
 
-    public void setItemKey(int itemKey) {
-        this.itemKey = itemKey;
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
     }
 
     public String getUsername() {
@@ -38,11 +39,11 @@ public class ItemUserKey implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ItemUserKey that = (ItemUserKey) o;
-        return itemKey == that.itemKey && username.equals(that.username);
+        return itemId == that.itemId && username.equals(that.username);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(itemKey, username);
+        return Objects.hash(itemId, username);
     }
 }

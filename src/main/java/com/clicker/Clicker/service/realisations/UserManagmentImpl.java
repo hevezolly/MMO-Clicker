@@ -53,10 +53,10 @@ public class UserManagmentImpl implements UserManagment, UserDetailsService {
 
     private long applyItems(long initialValue, MultipleItems[] items, User user){
         var initial = initialValue;
-        var userItems = items.clone();
+        var userItems = Arrays.copyOf(items, items.length);
         Arrays.sort(userItems, (i1, i2) -> Integer.compare(i1.getItem().getPriority(), i2.getItem().getPriority()));
-        for (var item : userItems) {
-            initial = item.getItem().modiphyClicks(initial, user, item.getItemNumber());
+        for (var i = 0; i < userItems.length; i++) {
+            initial = userItems[i].getItem().modiphyClicks(initial, user, userItems[i].getItemNumber());
         }
         return initial;
     }
@@ -74,8 +74,8 @@ public class UserManagmentImpl implements UserManagment, UserDetailsService {
         var team = user.getCurrent_team();
         if (team != null){
             var teamItems = new MultipleItems[team.getItems().size()];
-            team.getItems().toArray(items);
-            clickCount = applyItems(clickCount, items, user);
+            team.getItems().toArray(teamItems);
+            clickCount = applyItems(clickCount, teamItems, user);
             team.setClick_count(team.getClick_count()+clickCount);
             teamRep.save(team);
         }

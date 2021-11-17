@@ -38,9 +38,18 @@ public class ShopController {
     private ItemForm[] getItems(List<Item> items){
         var newItems = new ItemForm[items.size()];
         for (int i = 0; i < items.size(); i++) {
-            newItems[i] = new ItemForm(i, items.get(i));
+            newItems[i] = new ItemForm(items.get(i));
         }
         return newItems;
+    }
+
+    private void FillModel(Model model, User user){
+        model.addAttribute("userClicks", user.getClickCount());
+        model.addAttribute("userItems", getItems(itemManagment.GetUserItems()));
+        if (user.isLeader()) {
+            model.addAttribute("teamClicks", user.getCurrent_team().getClick_count());
+            model.addAttribute("teamItems", getItems(itemManagment.GetTeamItems()));
+        }
     }
 
     @GetMapping("/shop")
@@ -49,43 +58,50 @@ public class ShopController {
         if (user == null) {
             return "redirect:/";
         }
-        model.addAttribute("userItems", getItems(itemManagment.GetUserItems()));
-        if (user.isLeader())
-            model.addAttribute("teamItems", getItems(itemManagment.GetTeamItems()));
+        FillModel(model, user);
         return "shop";
     }
 
     private String buyTeamItem(int index, Team team, Model model){
-        var item = itemManagment.GetIndexedTeamItem(index);
+
+        var item = itemManagment.GetIndexedItem(index);
         if (item == null)
             model.addAttribute("itemNotFound", "предмет не найден");
         else if (teamManagment.BuyItem(team, item) == TeamRequestResult.NotEnoughMoney)
             model.addAttribute("notEnoughMoney", "предмет слишком дорогой");
         else
             model.addAttribute("successfulPurchase", "предмет куплен");
+        FillModel(model, team.getAdmin());
         return "shop";
     }
 
     private String buyUserItem(int index, User user, Model model){
-        var item = itemManagment.GetIndexedUserItem(index);
+        var item = itemManagment.GetIndexedItem(index);
+
         if (item == null)
             model.addAttribute("itemNotFound", "предмет не найден");
         if (userManagment.buyItem(user.getUsername(), item) == UserRequestResult.NotEnoughMoney)
             model.addAttribute("notEnoughMoney", "предмет слишком дорогой");
         else
             model.addAttribute("successfulPurchase", "предмет куплен");
+        FillModel(model, user);
         return "shop";
     }
 
     @PostMapping("/shop")
     private String buy(@RequestParam("command") String command, Model model){
+        var user = userManagment.getAuthUser();
+        if (user == null)
+            return "redirect:/";
+
+        FillModel(model, user);
         var matcher = compiledPattern.matcher(command);
-        if (!matcher.find())
+        if (!matcher.find()) {
             return "shop";
+        }
         var type = matcher.group(1);
         var index = Integer.parseInt(matcher.group(2));
 
-        var user = userManagment.getAuthUser();
         Item item = null;
 
         if ("user".equals(type))
