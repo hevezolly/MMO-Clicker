@@ -10,15 +10,15 @@
 </head>
 
 <body>
-<c:if test="${not empty param.error}">Wrong team name</c:if>
+<c:if test="${not empty param.error}">Такой команды не существует</c:if>
 <div>
   <form method="POST" action="/join_team">
     <h2>Введите имя команды</h2>
     <div>
-      <input name="team_name" type="text" placeholder="TeamName"
+      <input name="team_name" type="text" placeholder="Имя команды"
              autofocus="true"/>
       <button type="submit">Присоединиться</button>
-      <h4><a href="/..">Back</a></h4>
+      <h4><a href="/">Главная</a></h4>
     </div>
   </form>
 </div>

@@ -1,5 +1,6 @@
 package com.clicker.Clicker.controllers;
 
+import com.clicker.Clicker.entities.User;
 import com.clicker.Clicker.service.interfaces.UserManagment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -18,9 +19,14 @@ public class HomeController {
     @GetMapping("/")
     public String Index(Model model) {
         var user = userManagment.getAuthUser();
+        return getPage(model, user);
+    }
+
+    private String getPage(Model model, User user) {
         if (user != null) {
             var count = user.getClickCount();
             model.addAttribute("click_count", count);
+            model.addAttribute("inTeam", user.getCurrent_team() != null);
         }
         return "index";
     }
@@ -32,8 +38,6 @@ public class HomeController {
         var user = userManagment.getAuthUser();
         if ("clicked".equals(clickValue))
             userManagment.userClick(user.getUsername());
-        var count = userManagment.getUser(user.getUsername()).getClickCount();
-        model.addAttribute("click_count", count);
-        return "index";
+        return getPage(model, user);
     }
 }
