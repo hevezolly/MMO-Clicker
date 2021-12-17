@@ -1,6 +1,7 @@
-package com.clicker.Clicker.entities.items;
+package com.clicker.Clicker.entities.items.realisations;
 
 import com.clicker.Clicker.entities.User;
+import com.clicker.Clicker.entities.items.Item;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;

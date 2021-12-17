@@ -1,8 +1,8 @@
 package com.clicker.Clicker.service;
 
 import com.clicker.Clicker.entities.Role;
-import com.clicker.Clicker.entities.items.AddItem;
-import com.clicker.Clicker.entities.items.MultiplayItem;
+import com.clicker.Clicker.entities.items.realisations.AddItem;
+import com.clicker.Clicker.entities.items.realisations.MultiplayItem;
 import com.clicker.Clicker.repos.ItemRepository;
 import com.clicker.Clicker.repos.ItemsTeamsRepository;
 import com.clicker.Clicker.repos.ItemsUsersRepository;
