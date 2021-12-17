@@ -88,6 +88,8 @@ public class TeamManagmentImpl implements TeamManagment{
         for (var user:
              team.getUsers()) {
             user.setCurrent_team(null);
+            if (user.isLeader())
+                user.getRoles().remove(Role.getLeader());
             userRep.save(user);
         }
         itemsTeamsRepository.deleteAll(itemsTeamsRepository.findByIdTeamName(team.getTeam_name()));
